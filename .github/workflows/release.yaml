@@ -29,11 +29,11 @@ jobs:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
       - name: Build CLI & Publish to npm
-        run: pnpm --filter shadcn-vue pub:next
+        run: pnpm --filter shadcn-vue pub:release
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Build Module & Publish to npm
-        run: pnpm --filter shadcn-nuxt pub:next
+        run: pnpm --filter shadcn-nuxt pub:release
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
