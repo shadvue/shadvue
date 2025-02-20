@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Button } from '@/lib/registry/default/ui/button'
+import { Button } from '@/registry/default/ui/button'
 import { useData } from 'vitepress'
 import { computed } from 'vue'
 import Pencil2Icon from '~icons/radix-icons/pencil-2'

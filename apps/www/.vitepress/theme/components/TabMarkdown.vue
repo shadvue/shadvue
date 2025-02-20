@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { TabsContent } from '@/lib/registry/default/ui/tabs'
+import { TabsContent } from '@/registry/default/ui/tabs'
 
 withDefaults(defineProps<{
   title?: string

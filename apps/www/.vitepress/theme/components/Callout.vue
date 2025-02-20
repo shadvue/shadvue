@@ -3,7 +3,7 @@ import {
   Alert,
   AlertDescription,
   AlertTitle,
-} from '@/lib/registry/default/ui/alert'
+} from '@/registry/default/ui/alert'
 
 interface CalloutProps {
   icon?: string

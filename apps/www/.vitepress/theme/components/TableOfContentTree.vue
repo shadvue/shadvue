@@ -42,7 +42,9 @@ watch(() => route.path, () => {
                item.url === hash
                  ? 'font-medium text-foreground'
                  : 'text-muted-foreground')"
-        >{{ item.title }} </a>
+        >
+          {{ item.title }}
+        </a>
 
         <TableOfContentTree v-if="item.items?.length" :tree="item" :level="level + 1" />
       </li>

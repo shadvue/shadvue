@@ -50,7 +50,7 @@ This will install `vue` and `@astrojs/vue` as dependencies and automatically set
 
 ### Install TypeScript
 
-If you encounter the error `Cannot find module 'typescript'`, please proceed to install TypeScript as a dev dependency, as discussed [here](https://github.com/radix-vue/shadcn-vue/pull/118)
+If you encounter the error `Cannot find module 'typescript'`, please proceed to install TypeScript as a dev dependency, as discussed [here](https://github.com/unovue/shadcn-vue/pull/118)
 
 ```bash
 npm install -D typescript

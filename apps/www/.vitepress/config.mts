@@ -23,7 +23,7 @@ export default defineConfig({
     ['meta', { name: 'theme-color', media: '(prefers-color-scheme: light)', content: 'white' }],
     ['meta', { name: 'theme-color', media: '(prefers-color-scheme: dark)', content: 'black' }],
 
-    ['meta', { name: 'creator', content: 'radix-vue' }],
+    ['meta', { name: 'creator', content: 'reka-ui' }],
     ['meta', { name: 'theme-color', content: '#41b883' }],
     ['meta', { name: 'og:type', content: 'website' }],
     ['meta', { name: 'og:locale', content: 'en' }],
@@ -45,7 +45,7 @@ export default defineConfig({
       provider: 'local',
     },
     editLink: {
-      pattern: 'https://github.com/radix-vue/shadcn-vue/tree/dev/apps/www/src/:path',
+      pattern: 'https://github.com/unovue/shadcn-vue/tree/dev/apps/www/src/:path',
       text: 'Edit this page on GitHub',
     },
     carbonAds: {

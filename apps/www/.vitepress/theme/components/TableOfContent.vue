@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import type { TableOfContents, TableOfContentsItem } from '../types/docs'
-import { buttonVariants } from '@/lib/registry/default/ui/button'
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/lib/registry/default/ui/collapsible'
-import { ScrollArea } from '@/lib/registry/default/ui/scroll-area'
+import { buttonVariants } from '@/registry/default/ui/button'
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/registry/default/ui/collapsible'
 import { onContentUpdated } from 'vitepress'
 import { shallowRef } from 'vue'
 import CarbonAds from '../components/CarbonAds.vue'
@@ -61,16 +60,14 @@ onContentUpdated(() => {
 </script>
 
 <template>
-  <div class="hidden xl:block">
-    <ScrollArea orientation="vertical" class="h-[calc(100vh-6.5rem)] z-30 md:block overflow-y-auto" type="hover">
-      <div class="space-y-2">
-        <p class="font-medium">
-          On This Page
-        </p>
-        <TableOfContentTree :tree="headers" :level="1" />
-        <CarbonAds v-if="showCarbonAds" />
-      </div>
-    </ScrollArea>
+  <div class="hidden xl:block no-scrollbar h-full overflow-auto pb-16">
+    <div class="space-y-2">
+      <p class="font-medium">
+        On This Page
+      </p>
+      <TableOfContentTree :tree="headers" :level="1" />
+      <CarbonAds v-if="showCarbonAds" />
+    </div>
   </div>
 
   <div class="block xl:hidden mb-6">

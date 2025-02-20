@@ -51,7 +51,7 @@ export default defineNuxtModule<ModuleOptions>({
     const componentsPath = resolve(COMPONENT_DIR_PATH)
 
     // Tell Nuxt to not scan `componentsDir` for auto imports as we will do it manually
-    // See https://github.com/radix-vue/shadcn-vue/pull/528#discussion_r1590206268
+    // See https://github.com/unovue/shadcn-vue/pull/528#discussion_r1590206268
     nuxt.hook('components:dirs', (dirs) => {
       dirs.unshift({
         path: componentsPath,

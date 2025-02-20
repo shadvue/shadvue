@@ -3,7 +3,23 @@ title: Sidebar
 description: A composable, themeable and customizable sidebar component.
 ---
 
-<BlockPreview name="Sidebar07" ></BlockPreview>
+<figure class="flex flex-col gap-4">
+  <BlockPreview url="/block-renderer?name=Sidebar07&styles=new-york" ></BlockPreview>
+  <figcaption class="text-center text-sm text-gray-500">
+    A sidebar that collapses to icons.
+  </figcaption>
+</figure>
+
+Sidebars are one of the most complex components to build. They are central
+to any application and often contain a lot of moving parts.
+
+I don't like building sidebars. So I built 30+ of them. All kinds of
+configurations. Then I extracted the core components into `Sidebar*.vue`.
+
+We now have a solid foundation to build on top of. Composable. Themeable.
+Customizable.
+
+[Browse the Blocks Library](/blocks).
 
 ## Installation
 
@@ -59,6 +75,48 @@ A `Sidebar` component is composed of the following parts:
 - `SidebarTrigger` - Trigger for the Sidebar.
 
 ![sidebar-structure](/images/sidebar-structure.png)
+
+## Usage
+
+```vue:line-numbers title="App.vue"
+<script setup lang="ts">
+import AppSidebar from '@/components/AppSidebar.vue'
+import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
+</script>
+
+<template>
+  <SidebarProvider>
+    <AppSidebar />
+    <main>
+      <SidebarTrigger />
+      <RouterView />
+    </main>
+  </SidebarProvider>
+</template>
+```
+
+```vue:line-numbers title="components/AppSidebar.vue"
+<script setup lang="ts">
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarHeader,
+} from '@/components/ui/sidebar'
+</script>
+
+<template>
+  <Sidebar>
+    <SidebarHeader />
+    <SidebarContent>
+      <SidebarGroup />
+      <SidebarGroup />
+    </SidebarContent>
+    <SidebarFooter />
+  </Sidebar>
+</template>
+```
 
 ## Components
 

@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import type { DateRange } from 'radix-vue'
-import type { Ref } from 'vue'
+import type { DateRange } from 'reka-ui'
 import CookieSettings from '@/examples/cards/components/CookieSettings.vue'
 
 import CreateAccount from '@/examples/cards/components/CreateAccount.vue'
@@ -9,16 +8,16 @@ import PaymentMethod from '@/examples/cards/components/PaymentMethod.vue'
 import ReportAnIssue from '@/examples/cards/components/ReportAnIssue.vue'
 import ShareDocument from '@/examples/cards/components/ShareDocument.vue'
 import TeamMembers from '@/examples/cards/components/TeamMembers.vue'
-import CardChat from '@/lib/registry/new-york/example/CardChat.vue'
-import ActivityGoal from '@/lib/registry/new-york/example/Cards/ActivityGoal.vue'
+import CardChat from '@/registry/new-york/example/CardChat.vue'
+import ActivityGoal from '@/registry/new-york/example/Cards/ActivityGoal.vue'
+import DataTable from '@/registry/new-york/example/Cards/DataTable.vue'
 
-import DataTable from '@/lib/registry/new-york/example/Cards/DataTable.vue'
-import Metric from '@/lib/registry/new-york/example/Cards/Metric.vue'
-import CardStats from '@/lib/registry/new-york/example/CardStats.vue'
-import { Card } from '@/lib/registry/new-york/ui/card'
-import { RangeCalendar } from '@/lib/registry/new-york/ui/range-calendar'
-
+import Metric from '@/registry/new-york/example/Cards/Metric.vue'
+import CardStats from '@/registry/new-york/example/CardStats.vue'
+import { Card } from '@/registry/new-york/ui/card'
+import { RangeCalendar } from '@/registry/new-york/ui/range-calendar'
 import { getLocalTimeZone, today } from '@internationalized/date'
+
 import { ref } from 'vue'
 import ThemingLayout from './../../layout/ThemingLayout.vue'
 
@@ -53,7 +52,7 @@ const range = ref({
         </div>
       </div>
       <div class="space-y-4 lg:col-span-6 xl:col-span-5 xl:space-y-4">
-        <div class="hidden gap-1 sm:grid-cols-[280px_1fr] md:grid">
+        <div class="hidden gap-1 sm:grid-cols-[250px_1fr] md:grid">
           <Card class="max-w-[280px]">
             <RangeCalendar v-model="range" />
           </Card>
