@@ -74,7 +74,20 @@ A `Sidebar` component is composed of the following parts:
 - `SidebarGroup` - Section within the SidebarContent.
 - `SidebarTrigger` - Trigger for the Sidebar
 
-![sidebar-structure](/images/sidebar-structure.png)
+<img
+  src="/images/sidebar-structure.png"
+  width="716"
+  height="420"
+  alt="Sidebar Structure"
+  class="border dark:hidden rounded-lg overflow-hidden mt-6 w-full"
+/>
+<img
+  src="/images/sidebar-structure-dark.png"
+  width="716"
+  height="420"
+  alt="Sidebar Structure"
+  class="border hidden dark:block rounded-lg overflow-hidden mt-6 w-full"
+/>
 
 ## Usage
 
@@ -95,7 +108,7 @@ import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
 </template>
 ```
 
-```vue:line-numbers title="components/AppSidebar.vue"
+```vue:line-numbers title="@/components/AppSidebar.vue"
 <script setup lang="ts">
 import {
   Sidebar,
@@ -126,7 +139,7 @@ Let's start with the most basic sidebar A collapsible sidebar with a menu.
 
 ### Add a `SidebarProvider` and `SidebarTrigger` at the root of your application.
 
-```vue:line-numbers title="src/routes/+layout.svelte"
+```vue:line-numbers title="src/pages/index.vue"
 <script setup lang="ts">
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import AppSidebar from "@/components/AppSidebar.vue";
@@ -143,9 +156,9 @@ import AppSidebar from "@/components/AppSidebar.vue";
 </template>
 ```
 
-### Create a new sidebar component at `src/lib/components/app-sidebarsvelte`.
+### Create a new sidebar component at `@/components/AppSidebar.vue`.
 
-```vue:line-numbers title="src/lib/components/app-sidebarsvelte"
+```vue:line-numbers title="@/components/AppSidebar.vue"
 <script setup lang="ts">
 import { Sidebar, SidebarContent } from "@/components/ui/sidebar";
 </script>
@@ -161,7 +174,7 @@ import { Sidebar, SidebarContent } from "@/components/ui/sidebar";
 
 We'll use the `SidebarMenu` component in a `SidebarGroup`.
 
-```vue:line-numbers title="src/lib/components/app-sidebarsvelte"
+```vue:line-numbers title="@/components/AppSidebar.vue"
 <script setup lang="ts">
 import { Calendar, Home, Inbox, Search, Settings } from "lucide-vue-next"
 import {
@@ -261,9 +274,9 @@ The `SidebarProvider` component is used to provide the sidebar context to the `S
 
 ### Width
 
-If you have a single sidebar in your application, you can use the `SIDEBAR_WIDTH` and `SIDEBAR_WIDTH_MOBILE` constants in `@/components/sidebar/utils.ts` to set the width of the sidebar
+If you have a single sidebar in your application, you can use the `SIDEBAR_WIDTH` and `SIDEBAR_WIDTH_MOBILE` constants in `@/components/ui/sidebar/utils.ts` to set the width of the sidebar
 
-```ts:line-numbers title="@/components/sidebar/utils.ts"
+```ts:line-numbers title="@/components/ui/sidebar/utils.ts"
 export const SIDEBAR_WIDTH = "16rem";
 export const SIDEBAR_WIDTH_MOBILE = "18rem";
 ```
@@ -286,13 +299,13 @@ This will not only handle the width of the sidebar but also the layout spacing.
 
 ### Keyboard Shortcut
 
-The `SIDEBAR_KEYBOARD_SHORTCUT` variable in `@/components/sidebar/utils.ts` is used to set the keyboard shortcut used to open and close the sidebar
+The `SIDEBAR_KEYBOARD_SHORTCUT` variable in `@/components/ui/sidebar/utils.ts` is used to set the keyboard shortcut used to open and close the sidebar
 
 To trigger the sidebar, you use the `cmd+b` keyboard shortcut on Mac and `ctrl+b` on Windows.
 
 You can change the keyboard shortcut by changing the value of the `SIDEBAR_KEYBOARD_SHORTCUT` variable.
 
-```ts:line-numbers title="@/components/sidebar/utils.ts"
+```ts:line-numbers title="@/components/ui/sidebar/utils.ts"
 export const SIDEBAR_KEYBOARD_SHORTCUT = "b";
 ```
 
@@ -300,9 +313,9 @@ export const SIDEBAR_KEYBOARD_SHORTCUT = "b";
 
 The `SidebarProvider` supports persisting the sidebar state across page reloads and server-side rendering. It uses cookies to store the current state of the sidebar. When the sidebar state changes, a default cookie named `sidebar_state` is set with the current open/closed state. This cookie is then read on subsequent page loads to restore the sidebar state.
 
-To persist sidebar state in Next.js, set up your `SidebarProvider` in `app/layout.tsx` like this:
+To persist sidebar state in SSR, set up your `SidebarProvider` in `App.vue` like this:
 
-```vue:line-numbers title="app/layout.tsx"
+```vue:line-numbers title="App.vue"
 <!-- with Nuxt -->
 <script setup lang="ts">
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
@@ -316,16 +329,16 @@ const defaultOpen = useCookie<string>('sidebar_state')
     <AppSidebar />
     <main>
       <SidebarTrigger />
-      <slot />
+      <RouterView />  <!-- or <slot /> -->
     </main>
   </SidebarProvider>
 </template>
 
 ```
 
-You can change the name of the cookie by updating the `SIDEBAR_COOKIE_NAME` variable in `sidebar.tsx`.
+You can change the name of the cookie by updating the `SIDEBAR_COOKIE_NAME` variable in `sidebar/utils.ts`.
 
-```ts:line-numbers title="components/ui/sidebar.tsx"
+```ts:line-numbers title="@/components/ui/sidebar/utils.ts"
 export const SIDEBAR_COOKIE_NAME = "sidebar_state"
 ```
 
@@ -451,7 +464,7 @@ The following example adds a `<DropdownMenu>` to the `SidebarHeader`.
   </figcaption>
 </figure>
 
-```vue:line-numbers title="src/lib/components/app-sidebarsvelte"
+```vue:line-numbers title="@/components/AppSidebar.vue"
 <template>
   <Sidebar>
     <SidebarHeader>
@@ -493,7 +506,7 @@ The following example adds a `<DropdownMenu>` to the `SidebarFooter`.
   </figcaption>
 </figure>
 
-```vue:line-numbers title="src/lib/components/app-sidebarsvelte"
+```vue:line-numbers title="@/components/AppSidebar.vue"
 <template>
   <SidebarProvider>
     <Sidebar>
@@ -641,7 +654,20 @@ The `SidebarMenu` component is used for building a menu within a `SidebarGroup`.
 
 A `SidebarMenu` is composed of `SidebarMenuItem`, `SidebarMenuButton`, `SidebarMenuAction`, and `SidebarMenuSub` components.
 
-![Sidebar menu](/images/sidebar-menu.png)
+<img
+  src="/images/sidebar-menu.png"
+  width="716"
+  height="420"
+  alt="Sidebar Menu"
+  class="border dark:hidden rounded-lg overflow-hidden mt-6 w-full"
+/>
+<img
+  src="/images/sidebar-menu-dark.png"
+  width="716"
+  height="420"
+  alt="Sidebar Menu"
+  class="border hidden dark:block rounded-lg overflow-hidden mt-6 w-full"
+/>
 
 Here's an example of a `SidebarMenu` component rendering a list of projects.
 

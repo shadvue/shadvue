@@ -1,11 +1,11 @@
 import path from 'node:path'
-import { transformerMetaWordHighlight } from '@shikijs/transformers'
 import autoprefixer from 'autoprefixer'
 import tailwind from 'tailwindcss'
 import Icons from 'unplugin-icons/vite'
 import { defineConfig } from 'vitepress'
 
 import { siteConfig } from './theme/config/site'
+import CodeBlockPlugin from './theme/plugins/codeblock'
 import CodeWrapperPlugin from './theme/plugins/codewrapper'
 import ComponentPreviewPlugin from './theme/plugins/previewer'
 
@@ -56,12 +56,10 @@ export default defineConfig({
 
   srcDir: path.resolve(__dirname, '../src'),
   markdown: {
-    codeTransformers: [
-      transformerMetaWordHighlight(),
-    ],
     config(md) {
       md.use(ComponentPreviewPlugin)
       md.use(CodeWrapperPlugin)
+      md.use(CodeBlockPlugin)
     },
   },
   rewrites: {
