@@ -11,7 +11,7 @@ export function makeCodeSandboxParams(componentName: string, style: RegistryStyl
   let files: Record<string, any> = {}
   files = constructFiles(componentName, style, sources)
   files['.codesandbox/Dockerfile'] = {
-    content: 'FROM node:18',
+    content: 'FROM node:20',
   }
   return getParameters({ files, template: 'node' })
 }
@@ -138,7 +138,7 @@ function constructFiles(componentName: string, style: RegistryStyle, sources: Re
     'package.json': {
       content: {
         name: `shadcn-vue-${componentName.toLowerCase().replace(/ /g, '-')}`,
-        scripts: { start: `shadcn-vue add ${registryDependencies.join(' ')} -y && vite` },
+        scripts: { start: `shadcn-vue add ${registryDependencies.join(' ')} -o && vite` },
         dependencies,
         devDependencies,
       },
