@@ -10,7 +10,6 @@ export default function (md: MarkdownRenderer) {
     const token = tokens[idx]
     if (token && token.tag === 'code') {
       const title = token.info.match(/title="([^"]+)"/)?.[1] ?? null
-      console.log(title)
 
       return (
         `<div data-code-block-plugin>
