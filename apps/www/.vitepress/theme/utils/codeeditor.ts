@@ -98,7 +98,7 @@ function constructFiles(componentName: string, style: RegistryStyle, sources: Re
     'tailwind-merge': 'latest',
     'tailwindcss-animate': 'latest',
     'lucide-vue-next': 'latest',
-    'shadcn-vue': 'next',
+    'shadcn-vue': 'latest',
     'typescript': 'latest',
     'vaul-vue': 'latest',
     'vue-sonner': 'latest',
@@ -110,7 +110,7 @@ function constructFiles(componentName: string, style: RegistryStyle, sources: Re
     'vite': 'latest',
     '@vitejs/plugin-vue': 'latest',
     'vue-tsc': 'latest',
-    'tailwindcss': 'latest',
+    'tailwindcss': 'v3.4.13',
     'autoprefixer': 'latest',
   }
 

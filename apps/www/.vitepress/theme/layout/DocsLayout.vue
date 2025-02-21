@@ -53,7 +53,7 @@ const sourceLink = 'https://github.com/unovue/shadcn-vue/tree/dev/'
       </aside>
 
       <main class="relative py-6 lg:gap-10 lg:py-8 xl:grid xl:grid-cols-[1fr_300px]">
-        <div class="mx-auto w-full min-w-0 max-w-3xl">
+        <div class="mx-auto w-full min-w-0 max-w-2xl">
           <div class="block xl:hidden">
             <TableOfContent />
           </div>

@@ -216,8 +216,9 @@
 }
 
 div[class^="language-"] {
-	@apply mb-4 mt-6 max-h-[650px] overflow-x-auto md:rounded-lg border
+	@apply mb-4 mt-6 max-h-[650px] overflow-x-auto md:rounded-lg;
 }
+
 pre {
 	@apply py-4;
 }
