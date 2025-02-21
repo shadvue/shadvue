@@ -11,7 +11,7 @@ defineProps<{
   showCarbonAds?: boolean
 }>()
 
-const headers = shallowRef<TableOfContents>()
+const headers = shallowRef<TableOfContents>({ items: [] })
 
 function getHeadingsWithHierarchy(divId: string) {
   const div = document.querySelector(divId)
@@ -38,6 +38,7 @@ function getHeadingsWithHierarchy(divId: string) {
       title: heading.textContent || '',
       url: `#${heading.id}`,
       items: [],
+      heading,
     }
 
     if (level === 2) {
