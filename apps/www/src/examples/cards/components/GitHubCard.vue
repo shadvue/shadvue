@@ -53,7 +53,7 @@ import StarIcon from '~icons/radix-icons/star'
           >
             <DropdownMenuLabel>Suggested Lists</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuCheckboxitem :model-value="true">
+            <DropdownMenuCheckboxItem :model-value="true">
               Future Ideas
             </DropdownMenuCheckboxItem>
             <DropdownMenuCheckboxItem>My Stack</DropdownMenuCheckboxItem>
