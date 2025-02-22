@@ -121,6 +121,7 @@ const selectedUsers = ref<User[]>([])
             role: 'user',
             content: input,
           })
+          input = ''
         }"
       >
         <Input v-model="input" placeholder="Type a message..." class="flex-1" />
