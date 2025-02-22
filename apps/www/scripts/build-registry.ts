@@ -21,6 +21,7 @@ import {
   registrySchema,
 } from '../src/registry/schema'
 
+const METADATA_NAME = 'metadata.json'
 const REGISTRY_PATH = path.join(process.cwd(), 'src/public/r')
 
 const REGISTRY_INDEX_WHITELIST: z.infer<typeof registryItemTypeSchema>[] = [
@@ -294,7 +295,7 @@ export const Index: Record<string, any> = {
       description: "${item.description ?? ''}",
       type: "${item.type}",
       registryDependencies: ${JSON.stringify(item.registryDependencies)},
-      files: [${item.files?.map((file) => {
+      files: [${item.files?.filter(file => !file.path.includes(METADATA_NAME))?.map((file) => {
         const filePath = `registry/${style.name}/${
           typeof file === 'string' ? file : file.path
         }`
@@ -343,7 +344,7 @@ export const Index: Record<string, any> = {
     .map((item) => {
       return {
         ...item,
-        files: item.files?.map((_file) => {
+        files: item.files?.filter(file => !file.path.includes(METADATA_NAME))?.map((_file) => {
           const file = { path: _file.path, type: item.type }
           return file
         }),
@@ -468,10 +469,17 @@ async function buildStyles(registry: Registry) {
         continue
       }
 
+      let metadata: RegistryEntry = {} as any
       let files
       if (item.files) {
+        // get metadata.json index and exclude from `files`
+        const metadataIndex = item.files.findIndex(_file => _file.path.includes(METADATA_NAME))
+        if (metadataIndex !== -1) {
+          metadata = JSON.parse(item.files[metadataIndex].content ?? '{}')
+        }
+
         files = await Promise.all(
-          item.files.map(async (_file) => {
+          item.files.filter((_, index) => index !== metadataIndex).map(async (_file) => {
             const file = {
               path: _file.path,
               type: _file.type,
@@ -547,6 +555,7 @@ async function buildStyles(registry: Registry) {
           // chunks: true,
         })
         .safeParse({
+          ...metadata,
           ...item,
           files,
         })
@@ -759,8 +768,8 @@ async function buildThemes() {
           const [resolvedBase, scale] = resolvedColor.split('-')
           const color = scale
             ? colorsData[resolvedBase].find(
-              (item: any) => item.scale === Number.parseInt(scale),
-            )
+                (item: any) => item.scale === Number.parseInt(scale),
+              )
             : colorsData[resolvedBase]
           if (color) {
             base.cssVars[mode][key] = color.hslChannel
@@ -883,8 +892,8 @@ async function buildThemes() {
             const [resolvedBase, scale] = resolvedColor.split('-')
             const color = scale
               ? colorsData[resolvedBase].find(
-                (item: any) => item.scale === Number.parseInt(scale),
-              )
+                  (item: any) => item.scale === Number.parseInt(scale),
+                )
               : colorsData[resolvedBase]
             if (color) {
               payload.cssVars[mode][key] = color.hslChannel

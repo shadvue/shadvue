@@ -1,9 +1,10 @@
+import type { RegistryStyle } from './registry-styles'
 import type { Registry, RegistryFiles } from './schema'
 import { readdir, readFile } from 'node:fs/promises'
 import { parseSync } from '@oxc-parser/wasm'
 import { join, resolve } from 'pathe'
 import { compileScript, parse, walk } from 'vue/compiler-sfc'
-import { type RegistryStyle, styles } from './registry-styles'
+import { styles } from './registry-styles'
 
 // [Dependency, [...PeerDependencies]]
 const DEPENDENCIES = new Map<string, string[]>([
@@ -16,10 +17,7 @@ const DEPENDENCIES = new Map<string, string[]>([
   ['embla-carousel-vue', []],
   ['vee-validate', ['@vee-validate/zod', 'zod']],
 ])
-// Some dependencies latest tag were not compatible with Vue3.
-// const DEPENDENCIES_WITH_TAGS = new Map<string, string>([
-//   ['v-calendar', 'v-calendar@next'],
-// ])
+
 const REGISTRY_DEPENDENCY = '@/'
 const CATEGORIES = ['authentication', 'sidebar', 'login', 'dashboard']
 
