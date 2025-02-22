@@ -9,43 +9,9 @@ primitive: https://www.reka-ui.com/docs/components/accordion.html
 
 ## Installation
 
-<Steps>
-
-### Run the following command
-
 ```bash
 npx shadcn-vue@latest add accordion
 ```
-
-### Update `tailwind.config.js`
-
-Add the following animations to your `tailwind.config.js` file:
-
-```js title="tailwind.config.js" {5-18}
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-  theme: {
-    extend: {
-      keyframes: {
-        'accordion-down': {
-          from: { height: 0 },
-          to: { height: 'var(--reka-accordion-content-height)' },
-        },
-        'accordion-up': {
-          from: { height: 'var(--reka-accordion-content-height)' },
-          to: { height: 0 },
-        },
-      },
-      animation: {
-        'accordion-down': 'accordion-down 0.2s ease-out',
-        'accordion-up': 'accordion-up 0.2s ease-out',
-      },
-    },
-  },
-}
-```
-
-</Steps>
 
 ## Usage
 

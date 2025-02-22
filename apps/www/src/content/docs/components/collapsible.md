@@ -9,43 +9,9 @@ primitive: https://www.reka-ui.com/docs/components/collapsible.html
 
 ## Installation
 
-<Steps>
-
-### Run the following command
-
 ```bash
 npx shadcn-vue@latest add collapsible
 ```
-
-### Update `tailwind.config.js`
-
-Add the following animations to your `tailwind.config.js` file:
-
-```js title="tailwind.config.js" {5-18}
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-  theme: {
-    extend: {
-      keyframes: {
-        'collapsible-down': {
-          from: { height: 0 },
-          to: { height: 'var(--reka-collapsible-content-height)' },
-        },
-        'collapsible-up': {
-          from: { height: 'var(--reka-collapsible-content-height)' },
-          to: { height: 0 },
-        },
-      },
-      animation: {
-        'collapsible-down': 'collapsible-down 0.2s ease-in-out',
-        'collapsible-up': 'collapsible-up 0.2s ease-in-out',
-      },
-    },
-  },
-}
-```
-
-</Steps>
 
 ## Usage
 
