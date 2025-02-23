@@ -193,7 +193,7 @@ const items = [
   {
     title: "Home",
     url: "#",
-    icon: House,
+    icon: Home,
   },
   {
     title: "Inbox",
