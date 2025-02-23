@@ -216,6 +216,14 @@ export default defineNuxtConfig({
 })
 ```
 
+### Run Nuxt Prepare
+
+If you are initiating a new project, you need to run the command so that Nuxt generates the necessary `.nuxt` folder:
+
+```bash
+npx nuxi prepare
+```
+
 ### Run the CLI
 
 Run the `shadcn-vue` init command to setup your project:
