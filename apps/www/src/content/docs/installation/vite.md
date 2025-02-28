@@ -18,7 +18,7 @@ npm create vite@latest my-vue-app -- --template vue-ts
 Install `tailwindcss` and its peer dependencies, then generate your `tailwind.config.js` and `postcss` plugins:
 
 ```bash
-npm install -D tailwindcss autoprefixer
+npm install -D tailwindcss@3 autoprefixer
 ```
 
 ```bash
