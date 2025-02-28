@@ -35,6 +35,7 @@ export default antfu(
       'style/no-tabs': 0,
       'unused-imports/no-unused-vars': 0,
       'unicorn/no-new-array': 0,
+      'import-x/consistent-type-specifier-style': 0,
     },
   },
 )
