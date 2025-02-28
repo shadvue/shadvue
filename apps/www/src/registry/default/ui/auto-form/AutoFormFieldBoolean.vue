@@ -20,10 +20,10 @@ const booleanComponent = computed(() => props.config?.component === 'switch' ? S
           <slot v-bind="slotProps">
             <component
               :is="booleanComponent"
-              v-bind="{ ...slotProps.componentField }"
               :disabled="maybeBooleanishToBoolean(config?.inputProps?.disabled) ?? disabled"
-              :checked="slotProps.componentField.modelValue"
-              @update:checked="slotProps.componentField['onUpdate:modelValue']"
+              :name="slotProps.componentField.name"
+              :model-value="slotProps.componentField.modelValue"
+              @update:model-value="slotProps.componentField['onUpdate:modelValue']"
             />
           </slot>
         </FormControl>
