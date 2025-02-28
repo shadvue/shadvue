@@ -1,6 +1,7 @@
 import type { Config } from '@/src/utils/get-config'
 import type { RegistryItem } from '@/src/utils/registry/schema'
 import { existsSync, promises as fs } from 'node:fs'
+import os from 'node:os'
 import { getProjectInfo } from '@/src/utils/get-project-info'
 import { highlighter } from '@/src/utils/highlighter'
 import { logger } from '@/src/utils/logger'
@@ -59,6 +60,23 @@ export async function updateFiles(
   const filesUpdated = []
   const folderSkipped = new Map<string, boolean>()
   const filesSkipped = []
+
+  let tempRoot = ''
+  if (!config.typescript) {
+    for (const file of files) {
+      if (!file.content) {
+        continue
+      }
+      const dirName = path.dirname(file.path)
+      tempRoot = path.join(os.tmpdir(), 'shadcn-vue')
+
+      // Create the full temp directory path with original directory structure
+      const tempDir = path.join(tempRoot, dirName)
+
+      await fs.mkdir(tempDir, { recursive: true })
+      await fs.writeFile(path.join(tempRoot, file.path), file.content, 'utf-8')
+    }
+  }
 
   for (const file of files) {
     if (!file.content) {
@@ -133,7 +151,7 @@ export async function updateFiles(
 
     // Run our transformers.
     const content = await transform({
-      filename: file.path,
+      filename: path.join(tempRoot, file.path),
       raw: file.content,
       config,
       baseColor,
@@ -143,6 +161,11 @@ export async function updateFiles(
     existingFile
       ? filesUpdated.push(path.relative(config.resolvedPaths.cwd, filePath))
       : filesCreated.push(path.relative(config.resolvedPaths.cwd, filePath))
+  }
+
+  // Perform clean up if there's tempRoot generated for compiler-sfc to parse
+  if (tempRoot) {
+    await fs.rm(tempRoot, { recursive: true })
   }
 
   const hasUpdatedFiles = filesCreated.length || filesUpdated.length
