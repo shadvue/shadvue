@@ -22,7 +22,7 @@
     },
     {
       "path": "ui/avatar/AvatarImage.vue",
-      "content": "<script setup lang=\"ts\">\nimport { AvatarImage, type AvatarImageProps } from 'reka-ui'\n\nconst props = defineProps<AvatarImageProps>()\n</script>\n\n<template>\n  <AvatarImage v-bind=\"props\" class=\"h-full w-full object-cover\" />\n</template>\n",
+      "content": "<script setup lang=\"ts\">\nimport type { AvatarImageProps } from 'reka-ui'\nimport { AvatarImage } from 'reka-ui'\n\nconst props = defineProps<AvatarImageProps>()\n</script>\n\n<template>\n  <AvatarImage v-bind=\"props\" class=\"h-full w-full object-cover\">\n    <slot />\n  </AvatarImage>\n</template>\n",
       "type": "registry:ui",
       "target": ""
     },
