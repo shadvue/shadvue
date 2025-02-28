@@ -23,7 +23,7 @@ All credits go to these open-source works and resources
 
 - [Shadcn UI](https://ui.shadcn.com) for creating this beautiful project.
 - [Shadcn Svelte](https://shadcn-svelte.com) for some inspiration for registry.
-- [Radix Vue](https://reka-ui.com) for doing all the hard work to make sure components are accessible.
+- [Reka UI](https://reka-ui.com) for doing all the hard work to make sure components are accessible.
 - [VueUse](https://vueuse.org) for providing many useful utilities.
 
 - [ahmedmayara](https://github.com/ahmedmayara/shadcn-vue) for populating many components
