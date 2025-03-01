@@ -4461,7 +4461,7 @@ export const Index: Record<string, any> = {
       name: "TagsInputComboboxDemo",
       description: "",
       type: "registry:example",
-      registryDependencies: ["command","tags-input"],
+      registryDependencies: ["combobox","tags-input"],
       files: [{
         path: "registry/new-york/example/TagsInputComboboxDemo.vue",
         type: "registry:example",
@@ -10399,7 +10399,7 @@ export const Index: Record<string, any> = {
       name: "TagsInputComboboxDemo",
       description: "",
       type: "registry:example",
-      registryDependencies: ["command","tags-input"],
+      registryDependencies: ["combobox","tags-input"],
       files: [{
         path: "registry/default/example/TagsInputComboboxDemo.vue",
         type: "registry:example",
