@@ -32,6 +32,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/registry/new-york/ui/select'
+import { ref } from 'vue'
 import CaretSortIcon from '~icons/radix-icons/caret-sort'
 import CheckIcon from '~icons/radix-icons/check'
 import PlusCircledIcon from '~icons/radix-icons/plus-circled'

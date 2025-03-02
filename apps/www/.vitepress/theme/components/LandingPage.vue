@@ -48,13 +48,15 @@ import LandingExample from './LandingExample.vue'
 
     <div class="container-wrapper">
       <div class="container py-6">
-        <section class="space-y-8 overflow-hidden rounded-lg border-2 border-primary dark:border-muted md:hidden">
+        <section class="overflow-hidden rounded-lg border bg-background shadow-md md:hidden md:shadow-xl">
           <VPImage
-            alt="Mail"
+            alt="Card"
             width="1280"
-            height="866" class="block" :image="{
-              dark: '/examples/mail-dark.png',
-              light: '/examples/mail-light.png',
+            height="866"
+            class="block"
+            :image="{
+              dark: '/examples/cards-dark.png',
+              light: '/examples/cards-light.png',
             }"
           />
         </section>

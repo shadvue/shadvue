@@ -5,19 +5,15 @@ import { accounts, mails } from './data/mails'
 
 <template>
   <div class="md:hidden">
-    <image
-      src="/examples/mail-dark.png"
-      :width="1280"
-      :height="727"
+    <VPImage
       alt="Mail"
-      class="hidden dark:block"
-    />
-    <image
-      src="/examples/mail-light.png"
-      :width="1280"
-      :height="727"
-      alt="Mail"
-      class="block dark:hidden"
+      width="1280"
+      height="727"
+      class="block"
+      :image="{
+        dark: '/examples/mail-dark.png',
+        light: '/examples/mail-light.png',
+      }"
     />
   </div>
   <div class="hidden flex-col md:flex">

@@ -10,7 +10,7 @@ const examples = [
   {
     name: 'Examples',
     href: '/',
-    code: 'https://github.com/unovue/shadcn-vue/tree/dev/apps/www/src/examples',
+    code: 'https://github.com/unovue/shadcn-vue/tree/dev/apps/www/src/examples/cards',
   },
   {
     name: 'Mail',
@@ -21,11 +21,6 @@ const examples = [
     name: 'Dashboard',
     href: '/examples/dashboard.html',
     code: 'https://github.com/unovue/shadcn-vue/tree/dev/apps/www/src/examples/dashboard',
-  },
-  {
-    name: 'Cards',
-    href: '/examples/cards.html',
-    code: 'https://github.com/unovue/shadcn-vue/tree/dev/apps/www/src/examples/cards',
   },
   {
     name: 'Tasks',

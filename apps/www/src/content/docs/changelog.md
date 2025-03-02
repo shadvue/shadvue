@@ -132,20 +132,16 @@ And if you're looking for a date picker input, check out the [`Date Picker`](/do
 [`Blocks`](/blocks) are composed of different components that can be used to build your apps, with each block being a standalone section of your application. These blocks are fully responsive, accessible, and composable, and are built using the same principles as the other components in `shadcn-vue`.
 
 <div>
-    <image
-        src="/examples/block-dark.png"
-        :width="1280"
-        :height="727"
-        alt="Building Blocks"
-        class="hidden dark:block"
-    />
-    <image
-        src="/examples/block-light.png"
-        :width="1280"
-        :height="727"
-        alt="Building Blocks"
-        class="block dark:hidden"
-    />
+<VPImage
+  alt="Building Blocks"
+  width="1280"
+  height="727"
+  class="block"
+  :image="{
+    dark: '/examples/block-dark.png',
+    light: '/examples/block-light.png',
+  }"
+/>
 </div>
 
 ## March 2024
