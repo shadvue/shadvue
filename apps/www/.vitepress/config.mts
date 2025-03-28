@@ -3,7 +3,7 @@ import autoprefixer from 'autoprefixer'
 import tailwind from 'tailwindcss'
 import Icons from 'unplugin-icons/vite'
 import { defineConfig } from 'vitepress'
-import llms from 'vitepress-plugin-llms'
+import llmstxt from 'vitepress-plugin-llms'
 
 import { siteConfig } from './theme/config/site'
 import CodeBlockPlugin from './theme/plugins/codeblock'
@@ -77,8 +77,21 @@ export default defineConfig({
     },
     plugins: [
       Icons({ compiler: 'vue3', autoInstall: true }) as any,
-      llms({
-        workDir: 'content'
+      llmstxt({
+        workDir: 'content',
+        ignoreFiles: [
+          "blocks/*",
+          "docs/components.md",
+          "docs/components.md",
+          "docs/contribution.md",
+          "docs/typography.md",
+          "examples/**/*",
+          "meta/*",
+          "blocks-renderer.md",
+          "blocks.md",
+          "index.md",
+          "themes.md"
+        ]
       }),
     ],
     resolve: {
