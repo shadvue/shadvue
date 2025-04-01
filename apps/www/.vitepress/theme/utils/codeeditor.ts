@@ -5,7 +5,6 @@ import { getParameters } from 'codesandbox/lib/api/define'
 import cssRaw from '../../../../../packages/cli/test/fixtures/frameworks/nuxt/assets/css/tailwind.css?raw'
 import { Index as demoIndex } from '../../../../www/__registry__'
 // @ts-expect-error ?raw
-import tailwindConfigRaw from '../../../tailwind.config?raw'
 
 export function makeCodeSandboxParams(componentName: string, style: RegistryStyle, sources: Record<string, string>) {
   let files: Record<string, any> = {}
@@ -39,17 +38,11 @@ const viteConfig = {
     content: `import path from "path"
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import tailwindcss from '@tailwindcss/vite'
 
-import tailwind from 'tailwindcss';
-import autoprefixer from 'autoprefixer';
 
 export default defineConfig({
-  css: {
-    postcss: {
-      plugins: [tailwind(), autoprefixer()],
-    },
-  },
-  plugins: [vue()],
+  plugins: [vue(), tailwindcss()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
@@ -79,16 +72,22 @@ export default defineConfig({
 
 function constructFiles(componentName: string, style: RegistryStyle, sources: Record<string, string>) {
   const componentsJson = {
-    style,
+    $schema: 'https://shadcn-vue.com/schema.json',
+    style: 'new-york',
+    typescript: true,
     tailwind: {
-      config: 'tailwind.config.js',
+      config: '',
       css: 'src/assets/index.css',
       baseColor: 'zinc',
       cssVariables: true,
+      prefix: '',
     },
     aliases: {
-      utils: '@/utils',
       components: '@/components',
+      composables: '@/composables',
+      utils: '@/lib/utils',
+      ui: '@/components/ui',
+      lib: '@/lib',
     },
     iconLibrary: 'lucide',
   }
@@ -114,7 +113,8 @@ function constructFiles(componentName: string, style: RegistryStyle, sources: Re
     'vite': 'latest',
     '@vitejs/plugin-vue': 'latest',
     'vue-tsc': 'latest',
-    'tailwindcss': 'v3.4.13',
+    'tailwindcss': 'latest',
+    '@tailwindcss/vite': 'latest',
     'autoprefixer': 'latest',
   }
 
@@ -153,10 +153,6 @@ function constructFiles(componentName: string, style: RegistryStyle, sources: Re
       isBinary: false,
     },
     ...viteConfig,
-    'tailwind.config.js': {
-      content: tailwindConfigRaw,
-      isBinary: false,
-    },
     'tsconfig.json': {
       content: `{
 "$schema": "https://json.schemastore.org/tsconfig",
