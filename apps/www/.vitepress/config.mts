@@ -80,18 +80,18 @@ export default defineConfig({
       llmstxt({
         workDir: 'content',
         ignoreFiles: [
-          "blocks/*",
-          "docs/components.md",
-          "docs/components.md",
-          "docs/contribution.md",
-          "docs/typography.md",
-          "examples/**/*",
-          "meta/*",
-          "blocks-renderer.md",
-          "blocks.md",
-          "index.md",
-          "themes.md"
-        ]
+          'blocks/*',
+          'docs/components.md',
+          'docs/components.md',
+          'docs/contribution.md',
+          'docs/typography.md',
+          'examples/**/*',
+          'meta/*',
+          'blocks-renderer.md',
+          'blocks.md',
+          'index.md',
+          'themes.md',
+        ],
       }),
     ],
     resolve: {

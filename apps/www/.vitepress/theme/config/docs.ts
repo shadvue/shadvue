@@ -73,6 +73,12 @@ export const docsConfig: DocsConfig = {
           href: '/docs/cli',
         },
         {
+          title: 'Tailwind v4',
+          href: '/docs/tailwind-v4',
+          items: [],
+          label: 'New',
+        },
+        {
           title: 'Typography',
           href: '/docs/typography',
         },
@@ -121,27 +127,11 @@ export const docsConfig: DocsConfig = {
       ],
     },
     {
-      title: 'Extended',
-      items: [
-        {
-          title: 'Auto Form',
-          href: '/docs/components/auto-form',
-          items: [],
-        },
-        {
-          title: 'Charts',
-          href: '/docs/charts',
-          items: [],
-        },
-      ],
-    },
-    {
       title: 'Components',
       items: [
         {
           title: 'Sidebar',
           href: '/docs/components/sidebar',
-          label: 'New',
         },
         {
           title: 'Accordion',

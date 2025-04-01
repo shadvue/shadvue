@@ -14,7 +14,7 @@ export function makeCodeSandboxParams(componentName: string, style: RegistryStyl
     content: [
       'FROM node:20',
       'ENV COREPACK_ENABLE_DOWNLOAD_PROMPT = 0',
-      'RUN corepack enable'
+      'RUN corepack enable',
     ].join('\n'),
   }
   return getParameters({ files, template: 'node' })
@@ -100,7 +100,7 @@ function constructFiles(componentName: string, style: RegistryStyle, sources: Re
     'clsx': 'latest',
     'class-variance-authority': 'latest',
     'tailwind-merge': 'latest',
-    'tailwindcss-animate': 'latest',
+    'tw-animate-css': 'latest',
     'lucide-vue-next': 'latest',
     'shadcn-vue': 'latest',
     'typescript': 'latest',
