@@ -127,7 +127,7 @@ export const docsConfig: DocsConfig = {
       ],
     },
     {
-      title: 'Extended (Legacy)',
+      title: 'Extended',
       items: [
         {
           title: 'Auto Form',
@@ -140,6 +140,7 @@ export const docsConfig: DocsConfig = {
           items: [],
         },
       ],
+      label: 'Legacy',
     },
     {
       title: 'Components',

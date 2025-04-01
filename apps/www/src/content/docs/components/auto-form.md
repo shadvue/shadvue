@@ -2,6 +2,7 @@
 title: AutoForm
 description: Automatically generate a form from Zod schema.
 primitive: https://vee-validate.logaretm.com/v4/guide/overview/
+label: Legacy
 ---
 
 <Callout class="mt-6">
