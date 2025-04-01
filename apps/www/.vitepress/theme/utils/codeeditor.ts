@@ -1,11 +1,10 @@
 import type { RegistryStyle } from '@/registry/registry-styles'
 import sdk from '@stackblitz/sdk'
 import { getParameters } from 'codesandbox/lib/api/define'
-// @ts-expect-error ?raw
-import cssRaw from '../../../../../packages/cli/test/fixtures/frameworks/nuxt/assets/css/tailwind.css?raw'
 import { Index as demoIndex } from '../../../../www/__registry__'
-// @ts-expect-error ?raw
 
+// Running into error with tw4
+// https://github.com/stackblitz/core/issues/1855
 export function makeCodeSandboxParams(componentName: string, style: RegistryStyle, sources: Record<string, string>) {
   let files: Record<string, any> = {}
   files = constructFiles(componentName, style, sources)
@@ -34,7 +33,7 @@ export function makeStackblitzParams(componentName: string, style: RegistryStyle
 }
 
 const viteConfig = {
-  'vite.config.js': {
+  'vite.config.ts': {
     content: `import path from "path"
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
@@ -145,6 +144,7 @@ function constructFiles(componentName: string, style: RegistryStyle, sources: Re
         scripts: { start: `shadcn-vue add ${registryDependencies.join(' ')} -o && vite` },
         dependencies,
         devDependencies,
+        type: 'module',
       },
       isBinary: false,
     },
@@ -175,7 +175,7 @@ export function cn(...inputs: ClassValue[]) {
 }`,
     },
     'src/assets/index.css': {
-      content: cssRaw,
+      content: `@import "tailwindcss";`,
       isBinary: false,
     },
     'src/main.ts': {
