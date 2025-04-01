@@ -67,6 +67,9 @@ export default defineConfig({
     'content/(.*)': '(.*)',
   },
   vite: {
+    server: {
+      cors: true,
+    },
     css: {
       postcss: {
         plugins: [
