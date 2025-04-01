@@ -204,13 +204,13 @@ watch([style, codeConfig], async () => {
       value="preview"
       class="relative after:absolute after:inset-0 after:right-3 after:z-0 after:rounded-lg after:bg-muted h-[--height] px-0"
     >
-      <ResizablePanelGroup id="block-resizable" direction="horizontal" class="relative z-10">
+      <ResizablePanelGroup id="block-resizable" direction="horizontal" class="relative z-10 bg-background">
         <ResizablePanel
           id="block-resizable-panel-1"
           ref="resizableRef"
           :default-size="100"
           :min-size="30"
-          :as-child="true"
+          as-child
         >
           <BlockPreview :url="iframeURL" container />
         </ResizablePanel>
