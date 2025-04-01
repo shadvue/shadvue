@@ -6,6 +6,10 @@ primitive: https://vee-validate.logaretm.com/v4/guide/overview/
 
 <Callout class="mt-6">
 
+**Legacy**: Component will be moved to [extended repo](https://github.com/unovue/shadcn-vue/issues/1077) with Tailwind v4 support.
+
+---
+
 Credit: Heavily inspired by [AutoForm](https://github.com/vantezzen/auto-form) by Vantezzen
 
 </Callout>
