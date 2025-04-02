@@ -17,7 +17,7 @@ description: Install and configure Nuxt.
 Start by creating a new Nuxt project using `create-nuxt-app`:
 
 ```bash
-npx nuxi@latest init my-app
+npm create nuxt@latest
 ```
 
 <Callout>

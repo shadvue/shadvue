@@ -23,4 +23,7 @@ export default defineNuxtConfig({
   nitro: {
     preset: 'cloudflare_module',
   },
+  routeRules: {
+    '/**': { static: true },
+  },
 })
