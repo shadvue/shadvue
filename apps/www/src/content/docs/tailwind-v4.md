@@ -176,8 +176,9 @@ The new `size-*` utility (added in Tailwind v3.4), is now fully supported by `ta
 + size-4
 ```
 
-### 4. Update your dependencies
+### 4. Install and Update your dependencies
 
 ```bash
+pnpm i tw-animate-css
 pnpm up reka-ui lucide-vue-next tailwind-merge clsx --latest
 ```
