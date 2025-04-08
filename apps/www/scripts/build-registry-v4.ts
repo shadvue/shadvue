@@ -311,8 +311,8 @@ async function buildStyles(registry: Registry) {
           return {
             path: file.path,
             type: file.type,
-            // content: sourceFile.getText(),
-            content,
+            // replace all reference of `new-york-v4` because it's styling in component is `new-york`
+            content: content.replaceAll('/new-york-v4/', '/new-york/'),
             target,
           }
         }),
