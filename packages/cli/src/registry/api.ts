@@ -1,10 +1,6 @@
 import type {
   registryItemFileSchema,
-} from '@/src/utils/registry/schema'
-import { type Config, getTargetStyleFromConfig } from '@/src/utils/get-config'
-import { getProjectTailwindVersionFromConfig } from '@/src/utils/get-project-info'
-import { handleError } from '@/src/utils/handle-error'
-import { logger } from '@/src/utils/logger'
+} from '@/src/registry/schema'
 import {
   iconsSchema,
   registryBaseColorSchema,
@@ -12,7 +8,11 @@ import {
   registryItemSchema,
   registryResolvedItemsTreeSchema,
   stylesSchema,
-} from '@/src/utils/registry/schema'
+} from '@/src/registry/schema'
+import { type Config, getTargetStyleFromConfig } from '@/src/utils/get-config'
+import { getProjectTailwindVersionFromConfig } from '@/src/utils/get-project-info'
+import { handleError } from '@/src/utils/handle-error'
+import { logger } from '@/src/utils/logger'
 import { buildTailwindThemeColorsFromCssVars } from '@/src/utils/updaters/update-tailwind-config'
 import deepmerge from 'deepmerge'
 import { ofetch } from 'ofetch'
@@ -25,6 +25,8 @@ const REGISTRY_URL = process.env.REGISTRY_URL ?? 'https://shadcn-vue.com/r'
 const agent = process.env.https_proxy
   ? new ProxyAgent(process.env.https_proxy)
   : undefined
+
+const registryCache = new Map<string, Promise<any>>()
 
 export async function getRegistryIndex() {
   try {
@@ -180,16 +182,23 @@ export async function getItemTargetPath(
   )
 }
 
-async function fetchRegistry(paths: string[]) {
+export async function fetchRegistry(paths: string[]) {
   try {
     const results = await Promise.all(
       paths.map(async (path) => {
         const url = getRegistryUrl(path)
+
+        // Check cache first
+        if (registryCache.has(url)) {
+          return registryCache.get(url)
+        }
+
         const response = await ofetch(url, { dispatcher: agent, parseResponse: JSON.parse })
           .catch((error) => {
             throw new Error(error.data)
           })
 
+        registryCache.set(url, response)
         return response
       }),
     )
@@ -389,6 +398,7 @@ export async function registryGetTheme(name: string, config: Config) {
       },
     },
     cssVars: {
+      theme: {},
       light: {
         radius: '0.5rem',
       },
@@ -399,9 +409,13 @@ export async function registryGetTheme(name: string, config: Config) {
   if (config.tailwind.cssVariables) {
     theme.tailwind.config.theme.extend.colors = {
       ...theme.tailwind.config.theme.extend.colors,
-      ...buildTailwindThemeColorsFromCssVars(baseColor.cssVars.dark),
+      ...buildTailwindThemeColorsFromCssVars(baseColor.cssVars.dark ?? {}),
     }
     theme.cssVars = {
+      theme: {
+        ...baseColor.cssVars.theme,
+        ...theme.cssVars.theme,
+      },
       light: {
         ...baseColor.cssVars.light,
         ...theme.cssVars.light,
@@ -414,6 +428,10 @@ export async function registryGetTheme(name: string, config: Config) {
 
     if (tailwindVersion === 'v4' && baseColor.cssVarsV4) {
       theme.cssVars = {
+        theme: {
+          ...baseColor.cssVarsV4.theme,
+          ...theme.cssVars.theme,
+        },
         light: {
           ...theme.cssVars.light,
           ...baseColor.cssVarsV4.light,
@@ -427,6 +445,10 @@ export async function registryGetTheme(name: string, config: Config) {
   }
 
   return theme
+}
+
+export function clearRegistryCache() {
+  registryCache.clear()
 }
 
 function getRegistryUrl(path: string) {
@@ -444,7 +466,7 @@ function getRegistryUrl(path: string) {
   return `${REGISTRY_URL}/${path}`
 }
 
-function isUrl(path: string) {
+export function isUrl(path: string) {
   try {
     // eslint-disable-next-line no-new
     new URL(path)
@@ -453,4 +475,45 @@ function isUrl(path: string) {
   catch (error) {
     return false
   }
+}
+
+// TODO: We're double-fetching here. Use a cache.
+export async function resolveRegistryItems(names: string[], config: Config) {
+  const registryDependencies: string[] = []
+  for (const name of names) {
+    const itemRegistryDependencies = await resolveRegistryDependencies(
+      name,
+      config,
+    )
+    registryDependencies.push(...itemRegistryDependencies)
+  }
+
+  return Array.from(new Set(registryDependencies))
+}
+
+export function getRegistryTypeAliasMap() {
+  return new Map<string, string>([
+    ['registry:ui', 'ui'],
+    ['registry:lib', 'lib'],
+    ['registry:hook', 'hooks'],
+    ['registry:block', 'components'],
+    ['registry:component', 'components'],
+  ])
+}
+
+// Track a dependency and its parent.
+export function getRegistryParentMap(
+  registryItems: z.infer<typeof registryItemSchema>[],
+) {
+  const map = new Map<string, z.infer<typeof registryItemSchema>>()
+  registryItems.forEach((item) => {
+    if (!item.registryDependencies) {
+      return
+    }
+
+    item.registryDependencies.forEach((dependency) => {
+      map.set(dependency, item)
+    })
+  })
+  return map
 }
