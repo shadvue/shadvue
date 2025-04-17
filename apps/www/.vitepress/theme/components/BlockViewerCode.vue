@@ -13,14 +13,17 @@ const props = defineProps<{
 
 const activeFile = ref<FileTree>()
 
-const cacheCodes = ref<Map<string, string>>(new Map<string, string>())
-const activeCode = computed(() => cacheCodes.value.get(activeFile.value?.path ?? ''))
+const cacheCodes = ref<Map<string, { raw: string, html: string }>>(new Map())
+const activeFileMeta = computed(() => cacheCodes.value.get(activeFile.value?.path ?? ''))
 
 onBeforeMount(async () => {
   for (const file of (props.item.files ?? [])) {
     const raw = await file.raw()
     const highlighted = highlight(raw, 'vue')
-    cacheCodes.value.set(file.target || file.path.split(`${props.item.name}/`)[1], highlighted)
+    cacheCodes.value.set(file.target || file.path.split(`${props.item.name}/`)[1], {
+      raw,
+      html: highlighted,
+    })
   }
 })
 </script>
@@ -35,10 +38,10 @@ onBeforeMount(async () => {
         <File class="size-4" />
         {{ activeFile?.path }}
         <div class="ml-auto flex items-center gap-2">
-          <BlockCopyCodeButton :code="activeCode" />
+          <BlockCopyCodeButton :code="activeFileMeta?.raw" />
         </div>
       </div>
-      <div :key="activeFile?.path" data-line-codeblock class="relative flex-1 overflow-hidden after:absolute after:inset-y-0 after:left-0 after:w-10 after:bg-zinc-950 [&_.line:before]:sticky [&_.line:before]:left-2 [&_.line:before]:z-10 [&_.line:before]:translate-y-[-1px] [&_.line:before]:pr-1 [&_pre]:h-[--height] [&_pre]:overflow-auto [&_pre]:!bg-transparent [&_pre]:pb-20 [&_pre]:pt-4 [&_pre]:font-mono [&_pre]:text-sm [&_pre]:leading-relaxed" v-html="activeCode" />
+      <div :key="activeFile?.path" data-line-codeblock class="relative flex-1 overflow-hidden after:absolute after:inset-y-0 after:left-0 after:w-10 after:bg-zinc-950 [&_.line:before]:sticky [&_.line:before]:left-2 [&_.line:before]:z-10 [&_.line:before]:translate-y-[-1px] [&_.line:before]:pr-1 [&_pre]:h-[--height] [&_pre]:overflow-auto [&_pre]:!bg-transparent [&_pre]:pb-20 [&_pre]:pt-4 [&_pre]:font-mono [&_pre]:text-sm [&_pre]:leading-relaxed" v-html="activeFileMeta?.html" />
     </div>
   </div>
 </template>
