@@ -24,7 +24,16 @@
     "shadcn",
     "shadcn-vue"
   ],
-  "exports": "./dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./registry": {
+      "types": "./dist/registry/index.d.ts",
+      "default": "./dist/registry/index.js"
+    }
+  },
   "bin": "./dist/index.js",
   "files": [
     "dist"
