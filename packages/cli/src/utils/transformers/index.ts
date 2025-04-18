@@ -14,6 +14,7 @@ export interface TransformOpts {
   raw: string
   config: Config
   baseColor?: z.infer<typeof registryBaseColorSchema>
+  isRemote?: boolean
 }
 
 export async function transform(opts: TransformOpts) {
