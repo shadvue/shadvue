@@ -1,10 +1,11 @@
-import type { RegistryItem } from '@/src/registry/schema'
+import type { RegistryItem, registryItemFileSchema } from '@/src/registry/schema'
 import type { Config } from '@/src/utils/get-config'
+import type { ProjectInfo } from '@/src/utils/get-project-info'
+import type { z } from 'zod'
 import { existsSync, promises as fs } from 'node:fs'
 import { tmpdir } from 'node:os'
 import {
   getRegistryBaseColor,
-  getRegistryItemFileTargetPath,
 } from '@/src/registry/api'
 import { getProjectInfo } from '@/src/utils/get-project-info'
 import { highlighter } from '@/src/utils/highlighter'
@@ -14,20 +15,6 @@ import { transform } from '@/src/utils/transformers'
 import path, { basename, dirname } from 'pathe'
 // import { transformIcons } from '@/src/utils/transformers/transform-icons'
 import prompts from 'prompts'
-
-export function resolveTargetDir(
-  projectInfo: Awaited<ReturnType<typeof getProjectInfo>>,
-  config: Config,
-  target: string,
-) {
-  if (target.startsWith('~/')) {
-    return path.join(config.resolvedPaths.cwd, target.replace('~/', ''))
-  }
-  return path.join(config.resolvedPaths.cwd, target)
-  // return projectInfo?.isSrcDir
-  //   ? path.join(config.resolvedPaths.cwd, 'src', target)
-  //   : path.join(config.resolvedPaths.cwd, target)
-}
 
 export async function updateFiles(
   files: RegistryItem['files'],
@@ -41,7 +28,11 @@ export async function updateFiles(
   },
 ) {
   if (!files?.length) {
-    return
+    return {
+      filesCreated: [],
+      filesUpdated: [],
+      filesSkipped: [],
+    }
   }
   options = {
     overwrite: false,
@@ -61,8 +52,8 @@ export async function updateFiles(
 
   const filesCreated = []
   const filesUpdated = []
-  const folderSkipped = new Map<string, boolean>()
   const filesSkipped = []
+  const folderSkipped = new Map<string, boolean>()
 
   let tempRoot = ''
   if (!config.typescript) {
@@ -99,20 +90,47 @@ export async function updateFiles(
       continue
     }
 
-    let targetDir = getRegistryItemFileTargetPath(file, config)
-    const fileName = basename(file.path)
-    let filePath = path.join(targetDir, fileName)
+    let filePath = resolveFilePath(file, config, {
+      framework: projectInfo?.framework.name,
+      commonRoot: findCommonRoot(
+        files.map(f => f.path),
+        file.path,
+      ),
+    })
 
-    if (file.target) {
-      filePath = resolveTargetDir(projectInfo, config, file.target)
-      targetDir = path.dirname(filePath)
+    if (!filePath) {
+      continue
     }
+
+    const fileName = basename(file.path)
+    const targetDir = path.dirname(filePath)
 
     if (!config.typescript) {
       filePath = filePath.replace(/\.ts?$/, match => '.js')
     }
-
     const existingFile = existsSync(filePath)
+
+    // Run our transformers.
+    const content = await transform({
+      filename: path.join(tempRoot, 'registry', config.style, file.path),
+      raw: file.content,
+      config,
+      baseColor,
+      isRemote: options.isRemote,
+    })
+
+    // Skip the file if it already exists and the content is the same.
+    if (existingFile) {
+      const existingFileContent = await fs.readFile(filePath, 'utf-8')
+      const [normalizedExisting, normalizedNew] = await Promise.all([
+        getNormalizedFileContent(existingFileContent),
+        getNormalizedFileContent(content),
+      ])
+      if (normalizedExisting === normalizedNew) {
+        filesSkipped.push(path.relative(config.resolvedPaths.cwd, filePath))
+        continue
+      }
+    }
 
     // Check for existing folder in UI component only
     if (file.type === 'registry:ui') {
@@ -143,6 +161,9 @@ export async function updateFiles(
     else {
       if (existingFile && !options.overwrite) {
         filesCreatedSpinner.stop()
+        if (options.rootSpinner) {
+          options.rootSpinner.stop()
+        }
         const { overwrite } = await prompts({
           type: 'confirm',
           name: 'overwrite',
@@ -154,9 +175,15 @@ export async function updateFiles(
 
         if (!overwrite) {
           filesSkipped.push(path.relative(config.resolvedPaths.cwd, filePath))
+          if (options.rootSpinner) {
+            options.rootSpinner.start()
+          }
           continue
         }
         filesCreatedSpinner?.start()
+        if (options.rootSpinner) {
+          options.rootSpinner.start()
+        }
       }
     }
 
@@ -165,24 +192,10 @@ export async function updateFiles(
       await fs.mkdir(targetDir, { recursive: true })
     }
 
-    // Run our transformers.
-    const content = await transform({
-      filename: path.join(tempRoot, 'registry', config.style, file.path),
-      raw: file.content,
-      config,
-      baseColor,
-      isRemote: options.isRemote,
-    })
-
     await fs.writeFile(filePath, content, 'utf-8')
     existingFile
       ? filesUpdated.push(path.relative(config.resolvedPaths.cwd, filePath))
       : filesCreated.push(path.relative(config.resolvedPaths.cwd, filePath))
-  }
-
-  // Perform clean up if there's tempRoot generated for compiler-sfc to parse
-  if (tempRoot) {
-    await fs.rm(tempRoot, { recursive: true })
   }
 
   const hasUpdatedFiles = filesCreated.length || filesUpdated.length
@@ -226,7 +239,7 @@ export async function updateFiles(
     spinner(
       `Skipped ${filesSkipped.length} ${
         filesUpdated.length === 1 ? 'file' : 'files'
-      }:`,
+      }: (files might be identical, use --overwrite to overwrite)`,
       {
         silent: options.silent,
       },
@@ -241,4 +254,132 @@ export async function updateFiles(
   if (!options.silent) {
     logger.break()
   }
+
+  return {
+    filesCreated,
+    filesUpdated,
+    filesSkipped,
+  }
+}
+
+export function resolveTargetDir(
+  projectInfo: Awaited<ReturnType<typeof getProjectInfo>>,
+  config: Config,
+  target: string,
+) {
+  if (target.startsWith('~/')) {
+    return path.join(config.resolvedPaths.cwd, target.replace('~/', ''))
+  }
+  return path.join(config.resolvedPaths.cwd, target)
+  // return projectInfo?.isSrcDir
+  //   ? path.join(config.resolvedPaths.cwd, 'src', target)
+  //   : path.join(config.resolvedPaths.cwd, target)
+}
+
+export function resolveFilePath(
+  file: z.infer<typeof registryItemFileSchema>,
+  config: Config,
+  options: {
+    commonRoot?: string
+    framework?: ProjectInfo['framework']['name']
+  },
+) {
+  if (file.target) {
+    const target = file.target
+    if (target.startsWith('~/')) {
+      return path.join(config.resolvedPaths.cwd, target.replace('~/', ''))
+    }
+    return path.join(config.resolvedPaths.cwd, target)
+  }
+
+  const targetDir = resolveFileTargetDirectory(file, config)
+
+  const relativePath = resolveNestedFilePath(file.path, targetDir)
+  return path.join(targetDir, relativePath)
+}
+
+function resolveFileTargetDirectory(
+  file: z.infer<typeof registryItemFileSchema>,
+  config: Config,
+) {
+  if (file.type === 'registry:ui') {
+    return config.resolvedPaths.ui
+  }
+
+  if (file.type === 'registry:lib') {
+    return config.resolvedPaths.lib
+  }
+
+  if (file.type === 'registry:block' || file.type === 'registry:component') {
+    return config.resolvedPaths.components
+  }
+
+  if (file.type === 'registry:hook') {
+    return config.resolvedPaths.composables
+  }
+
+  return config.resolvedPaths.components
+}
+
+export function findCommonRoot(paths: string[], needle: string): string {
+  // Remove leading slashes for consistent handling
+  const normalizedPaths = paths.map(p => p.replace(/^\//, ''))
+  const normalizedNeedle = needle.replace(/^\//, '')
+
+  // Get the directory path of the needle by removing the file name
+  const needleDir = normalizedNeedle.split('/').slice(0, -1).join('/')
+
+  // If needle is at root level, return empty string
+  if (!needleDir) {
+    return ''
+  }
+
+  // Split the needle directory into segments
+  const needleSegments = needleDir.split('/')
+
+  // Start from the full path and work backwards
+  for (let i = needleSegments.length; i > 0; i--) {
+    const testPath = needleSegments.slice(0, i).join('/')
+    // Check if this is a common root by verifying if any other paths start with it
+    const hasRelatedPaths = normalizedPaths.some(
+      path => path !== normalizedNeedle && path.startsWith(`${testPath}/`),
+    )
+    if (hasRelatedPaths) {
+      return `/${testPath}` // Add leading slash back for the result
+    }
+  }
+
+  // If no common root found with other files, return the parent directory of the needle
+  return `/${needleDir}` // Add leading slash back for the result
+}
+
+export function resolveNestedFilePath(
+  filePath: string,
+  targetDir: string,
+): string {
+  // Normalize paths by removing leading/trailing slashes
+  const normalizedFilePath = filePath.replace(/^\/|\/$/g, '')
+  const normalizedTargetDir = targetDir.replace(/^\/|\/$/g, '')
+
+  // Split paths into segments
+  const fileSegments = normalizedFilePath.split('/')
+  const targetSegments = normalizedTargetDir.split('/')
+
+  // Find the last matching segment from targetDir in filePath
+  const lastTargetSegment = targetSegments[targetSegments.length - 1]
+  const commonDirIndex = fileSegments.findIndex(
+    segment => segment === lastTargetSegment,
+  )
+
+  if (commonDirIndex === -1) {
+    // Return just the filename if no common directory is found
+    return fileSegments[fileSegments.length - 1]
+  }
+
+  // Return everything after the common directory
+  return fileSegments.slice(commonDirIndex + 1).join('/')
+}
+
+export async function getNormalizedFileContent(content: string) {
+  return content.replace(/\r\n/g, '\n').trim()
 }
