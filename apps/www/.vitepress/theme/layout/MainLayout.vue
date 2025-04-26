@@ -138,10 +138,12 @@ function handleSelectLink(item: NavItem) {
                       :size="'icon'"
                       @click="toggleDark()"
                     >
-                      <component
-                        :is="isDark ? SunIcon : MoonIcon"
-                        class="w-4 h-4 text-foreground"
-                      />
+                      <ClientOnly>
+                        <component
+                          :is="isDark ? SunIcon : MoonIcon"
+                          class="w-4 h-4 text-foreground"
+                        />
+                      </ClientOnly>
                     </Button>
                   </nav>
                 </div>
