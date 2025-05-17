@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import type { VariantProps } from 'class-variance-authority'
-import { cn } from '@/lib/utils'
-import { toggleVariants } from '@/registry/new-york-v4/ui/toggle'
 import { reactiveOmit } from '@vueuse/core'
 import { ToggleGroupItem, type ToggleGroupItemProps, useForwardProps } from 'reka-ui'
 import { type HTMLAttributes, inject } from 'vue'
+import { cn } from '@/lib/utils'
+import { toggleVariants } from '@/registry/new-york-v4/ui/toggle'
 
 type ToggleGroupVariants = VariantProps<typeof toggleVariants>
 
@@ -22,6 +22,7 @@ const forwardedProps = useForwardProps(delegatedProps)
 
 <template>
   <ToggleGroupItem
+    v-slot="slotProps"
     data-slot="toggle-group-item"
     :data-variant="context?.variant || variant"
     :data-size="context?.size || size"
@@ -34,6 +35,6 @@ const forwardedProps = useForwardProps(delegatedProps)
       'min-w-0 flex-1 shrink-0 rounded-none shadow-none first:rounded-l-md last:rounded-r-md focus:z-10 focus-visible:z-10 data-[variant=outline]:border-l-0 data-[variant=outline]:first:border-l',
       props.class)"
   >
-    <slot />
+    <slot v-bind="slotProps" />
   </ToggleGroupItem>
 </template>

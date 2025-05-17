@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import type { toggleVariants } from '@/registry/new-york-v4/ui/toggle'
 import type { VariantProps } from 'class-variance-authority'
-import { cn } from '@/lib/utils'
+import type { toggleVariants } from '@/registry/new-york-v4/ui/toggle'
 import { reactiveOmit } from '@vueuse/core'
 import { ToggleGroupRoot, type ToggleGroupRootEmits, type ToggleGroupRootProps, useForwardPropsEmits } from 'reka-ui'
 import { type HTMLAttributes, provide } from 'vue'
+import { cn } from '@/lib/utils'
 
 type ToggleGroupVariants = VariantProps<typeof toggleVariants>
 
@@ -26,12 +26,13 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
 
 <template>
   <ToggleGroupRoot
+    v-slot="slotProps"
     data-slot="toggle-group"
     :data-size="size"
     :data-variant="variant"
     v-bind="forwarded"
     :class="cn('group/toggle-group flex w-fit items-center rounded-md data-[variant=outline]:shadow-xs', props.class)"
   >
-    <slot />
+    <slot v-bind="slotProps" />
   </ToggleGroupRoot>
 </template>
