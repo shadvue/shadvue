@@ -40,9 +40,9 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { Input } from '@/registry/new-york/ui/input'
 import {
   Pagination,
-  PaginationList,
+  PaginationContent,
   PaginationNext,
-  PaginationPrev,
+  PaginationPrevious,
 } from '@/registry/new-york/ui/pagination'
 import { Progress } from '@/registry/new-york/ui/progress'
 import { Separator } from '@/registry/new-york/ui/separator'
@@ -758,10 +758,10 @@ import {
                 Updated <time dateTime="2023-11-23">November 23, 2023</time>
               </div>
               <Pagination class="ml-auto mr-0 w-auto" :items-per-page="10">
-                <PaginationList class="gap-1">
-                  <PaginationPrev variant="outline" class="h-6 w-6" />
+                <PaginationContent class="gap-1">
+                  <PaginationPrevious variant="outline" class="h-6 w-6" />
                   <PaginationNext variant="outline" class="h-6 w-6" />
-                </PaginationList>
+                </PaginationContent>
               </Pagination>
             </CardFooter>
           </Card>
