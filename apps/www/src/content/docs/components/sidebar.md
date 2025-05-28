@@ -321,7 +321,7 @@ To persist sidebar state in SSR, set up your `SidebarProvider` in `App.vue` like
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import AppSidebar from "@/components/AppSidebar.vue"
 
-const defaultOpen = useCookie<string>('sidebar_state')
+const defaultOpen = useCookie<boolean>("sidebar_state");
 </script>
 
 <template>
