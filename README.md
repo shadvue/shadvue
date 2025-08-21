@@ -7,7 +7,7 @@
 
 [shadvue](https://www.shadvue.com/) is an unofficial community-led [Vue](https://vuejs.org) port of [shadcn/ui](https://ui.shadcn.com/).
 
-> **Note** <br> **We are not affiliated with shadcn, but we did get his blessing prior to creating this project** <br> This is a project born out of the need for a similar project for the vue ecosystem.
+> **Note** <br> **We are not affiliated with shadcn, but we did get his blessing prior to creating this project,forked from unovue/shadcn-vue** <br> This is a project born out of the need for a similar project for the vue ecosystem.
 
 Accessible and customizable components that you can copy and paste into your apps. Free. Open Source. **Use this to build your own component library**.
 
