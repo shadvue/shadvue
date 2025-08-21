@@ -1,6 +1,6 @@
 <p align="center">
- <img align="center" src="https://raw.githubusercontent.com/unovue/shadvue/dev/apps/www/src/public/android-chrome-192x192.png" height="96" />
- <h1 align="center">
+<img src="https://avatars.githubusercontent.com/u/227831990?s=48&v=4" />
+  <h1 align="center">
   shadvue
  </h1>
 </p>
