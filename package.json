@@ -16,7 +16,7 @@
     "dev": "pnpm --filter www dev",
     "build": "pnpm --filter www build",
     "preview": "pnpm --filter www preview",
-    "prepare": "pnpm simple-git-hooks",
+    "prepare": "pnpm simple-git-hooks || true",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "dev:cli": "pnpm --filter shadvue dev",
