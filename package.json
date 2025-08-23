@@ -2,7 +2,7 @@
   "name": "shadvue",
   "type": "module",
   "version": "2.2.0",
-  "private": true,
+  "private": false,
   "packageManager": "pnpm@9.15.9",
   "license": "MIT",
   "repository": "shadvue/shadvue",
