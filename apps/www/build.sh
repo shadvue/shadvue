@@ -20,13 +20,9 @@ fi
 # Set environment variables
 export VITE_APP_ENV=production
 
-# Install dependencies (including devDependencies for build tools)
-echo "📦 Installing dependencies..."
-pnpm install --frozen-lockfile --ignore-scripts
-
-# Install devDependencies separately
-echo "📦 Installing devDependencies..."
-NODE_ENV=development pnpm install --frozen-lockfile --ignore-scripts
+# Install dependencies (force include devDependencies for build tools)
+echo "📦 Installing dependencies with devDependencies..."
+NODE_ENV=development pnpm install --frozen-lockfile --ignore-scripts --include=dev
 
 # Build registry (if needed)
 echo "🔧 Building registry..."
