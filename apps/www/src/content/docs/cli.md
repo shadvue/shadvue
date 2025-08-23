@@ -10,7 +10,7 @@ Use the `init` command to initialize configuration and dependencies for a new pr
 The `init` command installs dependencies, adds the `cn` util, configures `tailwind.config.js`, and CSS variables for the project.
 
 ```bash
-npx shadcn-vue@latest init
+npx shadvue@latest init
 ```
 
 You will be asked a few questions to configure `components.json`:
@@ -24,7 +24,7 @@ Do you want to use CSS variables for colors? › no / yes
 ### Options
 
 ```txt
-Usage: shadcn-vue init [options] [components...]
+Usage: shadvue init [options] [components...]
 
 initialize your project and install dependencies
 
@@ -44,7 +44,7 @@ Options:
 Use the `add` command to add components and dependencies to your project.
 
 ```bash
-npx shadcn-vue@latest add [component]
+npx shadvue@latest add [component]
 ```
 
 You will be presented with a list of components to choose from:
@@ -68,7 +68,7 @@ Enter to submit.
 ### Options
 
 ```txt
-Usage: shadcn-vue add [options] [components...]
+Usage: shadvue add [options] [components...]
 
 add a component to your project
 
@@ -89,11 +89,11 @@ Options:
 In a monorepo, you can specify the path to your workspace with the `-c` or `--cwd` option.
 
 ```bash
-npx shadcn-vue@latest init -c ./apps/www
+npx shadvue@latest init -c ./apps/www
 ```
 
 or
 
 ```bash
-npx shadcn-vue@latest add alert-dialog -c ./apps/www
+npx shadvue@latest add alert-dialog -c ./apps/www
 ```

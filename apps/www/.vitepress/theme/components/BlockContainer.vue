@@ -138,11 +138,11 @@ watch([style, codeConfig], async () => {
           variant="ghost"
           class="hidden h-7 w-7 rounded-md border bg-transparent shadow-none md:flex lg:w-auto"
           size="sm"
-          @click="copy(`npx shadcn-vue@latest add ${name}`)"
+          @click="copy(`npx shadvue@latest add ${name}`)"
         >
           <Check v-if="copied" />
           <Terminal v-else />
-          <span class="hidden lg:inline">npx shadcn-vue add {{ name }}</span>
+          <span class="hidden lg:inline">npx shadvue add {{ name }}</span>
         </Button>
         <Separator
           orientation="vertical"

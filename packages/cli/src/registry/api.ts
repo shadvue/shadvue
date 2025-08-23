@@ -20,7 +20,7 @@ import { logger } from "@/src/utils/logger"
 import { buildTailwindThemeColorsFromCssVars } from "@/src/utils/updaters/update-tailwind-config"
 import { highlighter } from "../utils/highlighter"
 
-const REGISTRY_URL = process.env.REGISTRY_URL ?? "https://shadcn-vue.com/r"
+const REGISTRY_URL = process.env.REGISTRY_URL ?? "https://shadvue.com/r"
 
 const agent = process.env.https_proxy
   ? new ProxyAgent(process.env.https_proxy)

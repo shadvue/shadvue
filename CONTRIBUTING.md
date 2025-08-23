@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for your interest in contributing to shadcn-vue.com. We're happy to have you here.
+Thanks for your interest in contributing to shadvue.com. We're happy to have you here.
 
 Please take a moment to review this document before submitting your first pull request. We also strongly recommend that you check for open issues and pull requests to see if someone else is working on something similar.
 
@@ -37,14 +37,14 @@ packages
 | `apps/www/.vitepress`       | The Vitepress application for the website. |
 | `apps/www/src/content`      | The content for the website.               |
 | `apps/www/registry` | The registry for the components.           |
-| `packages/cli`              | The `shadcn-vue` package.                  |
+| `packages/cli`              | The `shadvue` package.                  |
 
 ## Development
 
 ### Start by cloning the repository:
 
 ```
-git clone git@github.com:unovue/shadcn-vue.git
+git clone git@github.com:shadvue/shadvue.git
 ```
 
 ### Install dependencies
@@ -59,13 +59,13 @@ You can use the `pnpm --filter=[WORKSPACE]` command to start the development pro
 
 #### Examples
 
-1. To run the `shadcn-vue.com` website:
+1. To run the `shadvue.com` website:
 
 ```
 pnpm dev
 ```
 
-2. To run the `shadcn-vue` cli package:
+2. To run the `shadvue` cli package:
 
 ```
 pnpm dev:cli
@@ -142,7 +142,7 @@ If you have a request for a new component, please open a discussion on GitHub. W
 
 ## CLI
 
-The `shadcn-vue` package is a CLI for adding components to your project. You can find the documentation for the CLI [here](https://shadcn-vue.com/docs/cli).
+The `shadvue` package is a CLI for adding components to your project. You can find the documentation for the CLI [here](https://shadvue.com/docs/cli).
 
 Any changes to the CLI should be made in the `packages/cli` directory. If you can, it would be great if you could add tests for your changes.
 

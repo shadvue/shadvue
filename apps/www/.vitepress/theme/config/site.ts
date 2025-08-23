@@ -1,12 +1,12 @@
 export const siteConfig = {
-  name: 'shadcn-vue',
-  url: 'https://shadcn-vue.com',
-  ogImage: 'https://shadcn-vue.com/og.png',
+  name: 'shadvue',
+  url: 'https://shadvue.com',
+  ogImage: 'https://shadvue.com/og.png',
   description:
 		'Beautifully designed components built with Reka UI and Tailwind CSS.',
   links: {
     twitter: 'https://twitter.com/huntabyte',
-    github: 'https://github.com/huntabyte/shadcn-vue',
+    github: 'https://github.com/unovue/shadvue',
     shadTwitter: 'https://twitter.com/shadcn',
     shadGithub: 'https://github.com/shadcn/ui',
   },

@@ -296,7 +296,7 @@ async function promptForConfig(defaultConfig: Config | null = null) {
   ])
 
   return rawConfigSchema.parse({
-    $schema: 'https://shadcn-vue.com/schema.json',
+    $schema: 'https://shadvue.com/schema.json',
     style: options.style,
     tailwind: {
       config: options.tailwindConfig,

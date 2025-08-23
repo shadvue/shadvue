@@ -1,6 +1,6 @@
-import path from 'node:path'
-import autoprefixer from 'autoprefixer'
-import tailwind from 'tailwindcss'
+import * as path from 'node:path'
+import * as autoprefixer from 'autoprefixer'
+import * as tailwind from 'tailwindcss'
 import Icons from 'unplugin-icons/vite'
 import { defineConfig } from 'vitepress'
 import llmstxt from 'vitepress-plugin-llms'
@@ -35,7 +35,7 @@ export default defineConfig({
   ],
 
   sitemap: {
-    hostname: 'https://www.shadcn-vue.com',
+    hostname: 'https://www.shadvue.com',
     transformItems(items) {
       return items.filter(item => !item.url.includes('migration'))
     },
@@ -47,12 +47,12 @@ export default defineConfig({
       provider: 'local',
     },
     editLink: {
-      pattern: 'https://github.com/unovue/shadcn-vue/tree/dev/apps/www/src/:path',
+      pattern: 'https://github.com/unovue/shadvue/tree/dev/apps/www/src/:path',
       text: 'Edit this page on GitHub',
     },
     carbonAds: {
       code: 'CW7DK27U',
-      placement: 'wwwshadcn-vuecom',
+      placement: 'wwwshadvuecom',
     },
   },
 
