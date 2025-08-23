@@ -28,6 +28,13 @@ NODE_ENV=development pnpm install --ignore-scripts --prod=false
 echo "🔧 Building registry..."
 pnpm run build:registry || echo "Registry build failed, continuing..."
 
+# Fallback: mirror src/registry to registry for code snippet includes (<<< @/registry/...)
+if [ -d "src/registry" ]; then
+  echo "📁 Preparing registry mirror for code snippets..."
+  rm -rf registry
+  cp -R src/registry registry || true
+fi
+
 # Type check
 echo "🔍 Type checking..."
 pnpm run typecheck || echo "Type check failed, continuing with build..."
