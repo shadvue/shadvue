@@ -14,7 +14,10 @@
     "build:registry": "tsx ./scripts/build-registry.ts",
     "build:registryV4": "tsx ./scripts/build-registry-v4.ts",
     "build:registry-strict": "pnpm typecheck:registry && tsx ./scripts/build-registry.ts",
-    "docs:gen": "tsx ./scripts/autogen.ts"
+    "docs:gen": "tsx ./scripts/autogen.ts",
+    "build:cf": "./build.sh",
+    "deploy:cf": "wrangler pages deploy .vitepress/dist --project-name=shadcn-vue-www",
+    "preview:cf": "wrangler pages dev .vitepress/dist --port=4173"
   },
   "dependencies": {
     "@formkit/auto-animate": "^0.8.2",

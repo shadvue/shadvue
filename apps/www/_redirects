@@ -1,0 +1,13 @@
+# Redirect old URLs to new ones
+/docs/components/* /docs/:splat 301
+/components/* /docs/:splat 301
+
+# Handle SPA routing - fallback to index.html for client-side routing
+/* /index.html 200
+
+# Redirect www to non-www (if needed)
+# https://www.shadcn-vue.com/* https://shadcn-vue.com/:splat 301
+
+# Redirect HTTP to HTTPS
+# http://shadcn-vue.com/* https://shadcn-vue.com/:splat 301
+# http://www.shadcn-vue.com/* https://shadcn-vue.com/:splat 301
