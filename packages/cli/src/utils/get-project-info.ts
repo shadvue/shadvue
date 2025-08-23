@@ -266,7 +266,7 @@ export async function getProjectConfig(
   }
 
   const config: RawConfig = {
-    $schema: 'https://shadvue.com/schema.json',
+    $schema: 'https://shadcn-vue.com/schema.json',
     typescript: projectInfo.typescript,
     style: 'new-york',
     tailwind: {

@@ -64,7 +64,7 @@ export async function updateFiles(
         continue
       }
       const dirName = path.dirname(file.path)
-      tempRoot = path.join(tmpdir(), 'shadvue')
+      tempRoot = path.join(tmpdir(), 'shadcn-vue')
 
       // Create the full temp directory path with original directory structure
       const tempDir = path.join(tempRoot, 'registry', config.style, dirName)
