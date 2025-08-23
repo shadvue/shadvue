@@ -1,18 +1,6 @@
 name = "shadcn-vue-www"
 compatibility_date = "2024-01-15"
 
-[env.production]
-name = "shadcn-vue-www"
-route = "www.shadcn-vue.com/*"
-
-[env.preview]
-name = "shadcn-vue-www-preview"
-
-# Pages configuration
-[pages]
-# Build configuration
-build_caching = true
-
 # Build output directory (VitePress default)
 pages_build_output_dir = ".vitepress/dist"
 
@@ -24,6 +12,13 @@ root_dir = "."
 
 # Node.js version
 node_version = "18"
+
+[env.production]
+name = "shadcn-vue-www"
+route = "www.shadcn-vue.com/*"
+
+[env.preview]
+name = "shadcn-vue-www-preview"
 
 # Environment variables
 [env.production.vars]
