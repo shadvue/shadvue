@@ -4,18 +4,8 @@ compatibility_date = "2024-01-15"
 # Build output directory (VitePress default)
 pages_build_output_dir = ".vitepress/dist"
 
-# Build command
-build_command = "pnpm build"
-
-# Root directory
-root_dir = "."
-
-# Node.js version
-node_version = "18"
-
 [env.production]
 name = "shadcn-vue-www"
-route = "www.shadcn-vue.com/*"
 
 [env.preview]
 name = "shadcn-vue-www-preview"
